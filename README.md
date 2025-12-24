@@ -1,30 +1,25 @@
-# homekma123
+# homekma123 — Preview URLs for 12345.html
 
-육아 관련 자료를 담고 있는 저장소입니다.
+This repository includes `12345.html`. Below are convenient preview/hosting URLs you can use to view the page in a browser.
 
-## 📄 파일 목록
+- raw.githack (fast, correct Content-Type rendering):
+  https://raw.githack.com/xownstj05-rgb/homekma123/1673393503dfedfa654dcb0e44a0f76684a056e7/12345.html
 
-| 파일명 | 설명 | 링크 |
-|--------|------|------|
-| index.html | 메인 페이지 - 육아 정보 및 리소스 | [🌐 보기](https://xownstj05-rgb.github.io/homekma123/index.html) |
-| ai_studio_code_육아.html | AI Studio 코드 관련 육아 문서 | [🌐 보기](https://xownstj05-rgb.github.io/homekma123/ai_studio_code_%EC%9C%A1%EC%95%84.html) |
+- htmlpreview (simple GitHub blob preview):
+  https://htmlpreview.github.io/?https://github.com/xownstj05-rgb/homekma123/blob/1673393503dfedfa654dcb0e44a0f76684a056e7/12345.html
 
-## 🔗 외부 접근 링크
+- GitHub Pages (if enabled for this repo — recommended for stable hosting):
+  https://xownstj05-rgb.github.io/homekma123/12345.html
 
-### GitHub Pages (웹으로 직접 보기)
-- [index.html](https://xownstj05-rgb.github.io/homekma123/index.html)
-- [ai_studio_code_육아.html](https://xownstj05-rgb.github.io/homekma123/ai_studio_code_%EC%9C%A1%EC%95%84.html)
+Notes:
+- If the repository is private, external preview services (raw.githack, htmlpreview) will not be able to fetch the file.
+- To enable GitHub Pages: go to the repository Settings → Pages, select the branch (e.g., `main`) and the folder (`/ (root)`), then save. After a few minutes the Pages URL will be active.
 
-### GitHub 저장소
-- [index.html (GitHub)](https://github.com/xownstj05-rgb/homekma123/blob/main/index.html)
-- [ai_studio_code_육아.html (GitHub)](https://github.com/xownstj05-rgb/homekma123/blob/main/ai_studio_code_%EC%9C%A1%EC%95%84.html)
+File: 12345.html
+Source blob commit: 1673393503dfedfa654dcb0e44a0f76684a056e7
 
-### Raw 파일 (다운로드)
-- [index.html (Raw)](https://raw.githubusercontent.com/xownstj05-rgb/homekma123/main/index.html)
-- [ai_studio_code_육아.html (Raw)](https://raw.githubusercontent.com/xownstj05-rgb/homekma123/main/ai_studio_code_%EC%9C%A1%EC%95%84.html)
+---
 
-## 저장소 정보
-
-- **저장소명**: homekma123
-- **소유자**: xownstj05-rgb
-- **브랜치**: main
+If you want, I can also:
+- Enable a different filename or path for Pages (e.g., `index.html`) and push it to a branch.
+- Generate a short README summary in Korean.
