@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>생성형 AI 입문 — 원페이지 학습</title>
+  <meta name="description" content="생성형 AI 입문자를 위한 한 페이지 학습 사이트 — LLM 원리, 프롬프트, 윤리 등" />
+  <meta name="theme-color" content="#ffffff" id="meta-theme-color" />
+
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN and config (dark mode class 기반) -->
+  <script>
+    tailwind = { config: { darkMode: 'class', theme: { extend: { colors: { 'brand': '#2563eb' } } } } }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root { --glass: rgba(255,255,255,0.6); --glass-dark: rgba(15,23,42,0.6); }
+    html { scroll-behavior:smooth; font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif; }
+
+    /* 3D 버튼 스타일 */
+    .btn-3d {
+      display:inline-block;
+      transform-style:preserve-3d;
+      perspective:800px;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .btn-3d .face {
+      display:inline-block;
+      transform: translateZ(18px);
+      padding: .9rem 1.6rem;
+      border-radius: .75rem;
+      font-weight:700;
+      letter-spacing: .2px;
+      box-shadow: 0 12px 24px rgba(37,99,235,0.18);
+    }
+    .btn-3d:hover { transform: translateY(-4px) }
+    .btn-3d:active { transform: translateY(-2px) }
+
+    /* 버튼 뒷면 (border-like depth) */
+    .btn-3d::after{
+      content:"";
+      position:absolute;
+      inset:auto 0  -8px 0;
+      height:8px;
+      border-radius:8px;
+      filter: blur(8px);
+      opacity:.45;
+      pointer-events:none;
+    }
+
+    /* gradient border on hover using wrapper technique */
+    .grad-border {
+      transition: background 300ms ease, transform 200ms ease;
+      background: transparent;
+      padding: .5rem;
+      border-radius: .75rem;
+    }
+    .grad-border .card-inner { transition: transform 200ms ease; }
+    .grad-border:hover { background: linear-gradient(90deg,#6366f1,#ec4899,#f59e0b); transform: translateY(-6px); }
+    .grad-border:hover .card-inner { transform: translateY(0); }
+
+    /* backdrop blur fallback */
+    .backdrop-blur-fallback { background: rgba(255,255,255,0.7); }
+    @media (prefers-color-scheme: dark) {
+      .backdrop-blur-fallback { background: rgba(2,6,23,0.65); }
+    }
+
+    /* small helper for dark meta theme */
+    .hidden-visually { position: absolute !important; height: 1px; width: 1px; overflow: hidden; clip: rect(1px, 1px, 1px, 1px); white-space: nowrap; }
+  </style>
+</head>
+<body class="antialiased text-slate-900 bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-800">
+
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-50">
+    <div class="backdrop-blur-md backdrop-filter border-b border-transparent dark:border-slate-700">
+      <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <a href="#" class="flex items-center gap-3">
+            <svg class="w-8 h-8 text-indigo-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="6" fill="currentColor"></rect>
+            </svg>
+            <span class="font-semibold text-lg text-slate-800 dark:text-slate-100">AI 입문</span>
+          </a>
+
+          <div class="hidden md:flex items-center gap-6">
+            <a href="#home" class="text-slate-700 dark:text-slate-200 hover:text-indigo-600">홈</a>
+            <a href="#topics" class="text-slate-700 dark:text-slate-200 hover:text-indigo-600">핵심 주제</a>
+            <a href="#resources" class="text-slate-700 dark:text-slate-200 hover:text-indigo-600">자료</a>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <button id="theme-toggle" aria-label="테마 전환" class="p-2 rounded-md bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm">
+              <svg id="icon-moon" class="w-5 h-5 text-slate-800 dark:hidden" viewBox="0 0 24 24" fill="none">
+                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="currentColor"></path>
+              </svg>
+              <svg id="icon-sun" class="w-5 h-5 hidden text-yellow-400" viewBox="0 0 24 24" fill="none">
+                <path d="M12 4V2M12 22v-2M4.2 4.2l-1.4-1.4M20.2 20.2l-1.4-1.4M2 12H4m16 0h2M4.2 19.8l-1.4 1.4M20.2 3.8l-1.4 1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+
+            <a href="#topics" class="ml-2 inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-indigo-600 text-white hover:bg-indigo-500">
+              시작하기
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main id="home" class="relative">
+    <section class="min-h-[70vh] flex items-center">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+          <div class="md:col-span-7">
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 leading-tight">
+              AI의 미래를 학습하세요
+            </h1>
+            <p class="mt-4 text-lg text-slate-600 dark:text-slate-300 max-w-2xl">
+              생성형 AI의 핵심 개념과 실습 팁을 한 페이지로 정리합니다. LLM 원리부터 프롬프트 엔지니어링, 윤리까지 빠르게 학습해보세요.
+            </p>
+
+            <div class="mt-8 flex items-center gap-4">
+              <span class="relative inline-block">
+                <button class="btn-3d relative rounded-lg shadow-none">
+                  <span class="face inline-block bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-400 text-white">
+                    시작하기
+                  </span>
+                </button>
+                <span class="hidden-visually">Start learning</span>
+              </span>
+
+              <a href="#resources" class="text-sm text-slate-500 dark:text-slate-300 hover:underline">추가 자료 보기 →</a>
+            </div>
+          </div>
+
+          <div class="md:col-span-5">
+            <div class="rounded-xl p-1 bg-gradient-to-br from-indigo-50 via-white to-white dark:from-slate-900/40 dark:via-slate-800/30">
+              <div class="rounded-xl bg-white dark:bg-slate-800 p-6 shadow-lg">
+                <h3 class="font-semibold text-slate-800 dark:text-slate-100">빠른 가이드</h3>
+                <p class="mt-3 text-sm text-slate-600 dark:text-slate-300">
+                  실습 팁 · 프롬프트 예제 · 윤리 고려사항을 단계별로 제공합니다.
+                </p>
+                <ul class="mt-4 text-sm text-slate-600 dark:text-slate-300 space-y-2">
+                  <li>✅ LLM의 기본 원리 이해</li>
+                  <li>✅ 프롬프트 작성 요령</li>
+                  <li>✅ 윤리적 사용 가이드라인</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- GRID SECTIONS -->
+    <section id="topics" class="py-16">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">핵심 주제</h2>
+        <p class="mt-2 text-slate-600 dark:text-slate-300 max-w-2xl">LLM 원리, 프롬프트 엔지니어링, AI 윤리를 한눈에 살펴보세요.</p>
+
+        <div class="mt-8 grid gap-6 grid-cols-1 md:grid-cols-3">
+          <!-- Card 1 -->
+          <div class="grad-border">
+            <div class="card-inner rounded-lg bg-white dark:bg-slate-800 p-6 h-full">
+              <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-100">LLM 원리</h3>
+              <p class="mt-3 text-sm text-slate-600 dark:text-slate-300">대규모 언어 모델(LLM)은 토큰 간 확률과 패턴을 학습하여 다음 단어를 예측합니다.</p>
+              <p class="mt-4 text-xs text-slate-500 dark:text-slate-400">핵심: 토큰화, 사전학습, 파인튜닝, 샘플링 전략</p>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="grad-border">
+            <div class="card-inner rounded-lg bg-white dark:bg-slate-800 p-6 h-full">
+              <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-100">프롬프트 엔지니어링</h3>
+              <p class="mt-3 text-sm text-slate-600 dark:text-slate-300">효과적인 프롬프트는 명확한 지시, 예시(샘플), 원하는 포맷을 포함합니다.</p>
+              <p class="mt-4 text-xs text-slate-500 dark:text-slate-400">팁: 컨텍스트 제공, 단계적 지시, 온도 조절</p>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="grad-border">
+            <div class="card-inner rounded-lg bg-white dark:bg-slate-800 p-6 h-full">
+              <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-100">AI 윤리</h3>
+              <p class="mt-3 text-sm text-slate-600 dark:text-slate-300">데이터 편향, 저작권, 악용 방지 등 윤리적 고려가 필수입니다.</p>
+              <p class="mt-4 text-xs text-slate-500 dark:text-slate-400">권장: 검증, 설명가능성, 책임 있는 거버넌스</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESOURCES -->
+    <section id="resources" class="py-12 bg-slate-50 dark:bg-slate-900/40">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-xl font-semibold text-slate-900 dark:text-slate-100">추가 자료</h2>
+        <ul class="mt-4 space-y-2 text-slate-600 dark:text-slate-300">
+          <li><a href="https://ko.wikipedia.org/wiki/%EC%83%9D%EC%84%B1%ED%98%95_%EC%95%84%EC%9D%B4" class="hover:underline">생성형 인공지능 - 위키백과</a></li>
+          <li><a href="https://openai.com" class="hover:underline">OpenAI</a></li>
+          <li><a href="#" class="hover:underline">프롬프트 예제 모음 (예시)</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="py-8">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-sm text-slate-500 dark:text-slate-400">
+        © 2025 — 생성형 AI 입문 페이지 · 단일 파일 예제
+      </div>
+    </footer>
+  </main>
+
+  <!-- Script: Theme Toggle and initialization -->
+  <script>
+    (function(){
+      const html = document.documentElement;
+      const toggle = document.getElementById('theme-toggle');
+      const moonIcon = document.getElementById('icon-moon');
+      const sunIcon = document.getElementById('icon-sun');
+      const metaTheme = document.getElementById('meta-theme-color');
+
+      function setTheme(isDark) {
+        if (isDark) {
+          html.classList.add('dark');
+          moonIcon.classList.add('hidden');
+          sunIcon.classList.remove('hidden');
+          metaTheme.content = '#0f172a';
+        } else {
+          html.classList.remove('dark');
+          moonIcon.classList.remove('hidden');
+          sunIcon.classList.add('hidden');
+          metaTheme.content = '#ffffff';
+        }
+        localStorage.setItem('prefers-dark', isDark ? '1' : '0');
+      }
+
+      // Initialize theme
+      const saved = localStorage.getItem('prefers-dark');
+      const prefersDark = saved === null ? window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches : saved === '1';
+      setTheme(prefersDark);
+
+      toggle.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.contains('dark');
+        setTheme(!isDark);
+      });
+
+      // Improve button 3D shadow color based on theme
+      const btn = document.querySelector('.btn-3d');
+      function updateBtnShadow() {
+        const face = btn.querySelector('.face');
+        if (document.documentElement.classList.contains('dark')) {
+          face.style.boxShadow = '0 12px 24px rgba(0,0,0,0.45)';
+          btn.style.setProperty('--btn-after', 'rgba(0,0,0,0.3)');
+          btn.style.setProperty('transform', 'translateY(0)');
+        } else {
+          face.style.boxShadow = '0 12px 24px rgba(37,99,235,0.18)';
+        }
+      }
+      updateBtnShadow();
+      // update on theme toggle
+      toggle.addEventListener('click', updateBtnShadow);
+    })();
+  </script>
+</body>
+</html>
