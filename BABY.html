@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>긍정 훈육 & 발달 인포그래픽 슬라이드</title>
+
+    <!-- Reveal.js CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css" id="theme">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --title-size: 24pt;
+            --content-size: 17pt;
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            --text-color: #ffffff;
+            --accent-color: #64b5f6;
+            --bg-gradient: linear-gradient(45deg, #1cb5e0 0%, #000851 100%);
+        }
+
+        /* Light Theme Override */
+        body.light-theme {
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+            --text-color: #333333;
+            --accent-color: #0d47a1;
+            --bg-gradient: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Pretendard', sans-serif;
+            color: var(--text-color);
+            transition: all 0.5s ease;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .reveal {
+            font-size: var(--content-size);
+        }
+
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+            font-family: 'Pretendard', sans-serif;
+            text-transform: none;
+            color: var(--text-color);
+        }
+
+        /* Glassmorphism Cards */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            padding: 30px;
+            margin: 20px auto;
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+
+        /* Layout Utilities */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; height: 100%; }
+        .flex-center { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+        /* Typography Override */
+        .slide-title {
+            font-size: var(--title-size) !important;
+            font-weight: 700;
+            margin-bottom: 20px !important;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .content-text {
+            font-size: var(--content-size);
+            line-height: 1.6;
+        }
+        
+        /* Scrollable Content Area for Long Text */
+        .scroll-box {
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+            font-size: 14pt; /* Slightly smaller for detailed text */
+            background: rgba(0,0,0,0.05);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .scroll-box::-webkit-scrollbar { width: 6px; }
+        .scroll-box::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 3px; }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 10px 20px;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            font-family: 'Pretendard';
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Tables */
+        table.glass-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16pt;
+        }
+        table.glass-table th { border-bottom: 2px solid var(--accent-color); padding: 10px; text-align: left; }
+        table.glass-table td { border-bottom: 1px solid rgba(255,255,255,0.1); padding: 10px; }
+
+        /* Custom Elements */
+        .highlight { color: var(--accent-color); font-weight: bold; }
+        
+        .timeline { border-left: 3px solid var(--accent-color); margin-left: 20px; padding-left: 20px; }
+        .timeline-item { position: relative; margin-bottom: 20px; }
+        .timeline-item::before { content: ''; position: absolute; left: -29px; top: 5px; width: 15px; height: 15px; background: var(--accent-color); border-radius: 50%; }
+
+    </style>
+</head>
+<body>
+
+    <button class="theme-toggle" onclick="toggleTheme()">🌗 테마 전환</button>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1: Intro -->
+            <section>
+                <div class="glass-panel text-center">
+                    <h1 class="slide-title" style="font-size: 40pt !important;">긍정 훈육의 기초와 철학</h1>
+                    <h3 style="font-size: 20pt; color: var(--accent-color);">태어나는 순간부터 시작되는 여정</h3>
+                    <div class="grid-2">
+                        <div class="glass-panel" style="background: rgba(255,255,255,0.05);">
+                            <div class="content-text">
+                                <ul>
+                                    <li class="fragment fade-up">👶 <strong>태어나는 순간부터:</strong> 평생 지속되는 규칙 학습</li>
+                                    <li class="fragment fade-up">🏡 <strong>권위 있는 위계:</strong> 부모의 확고한 가이드라인</li>
+                                    <li class="fragment fade-up">🌱 <strong>습관화:</strong> 잔소리 대신 시스템 만들기</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="scroll-box content-text">
+                            <strong>상세 설명:</strong><br>
+                            훈육은 아이가 말을 알아듣는 시기가 아니라 태어나는 순간부터 시작하여 평생 지속되는 삶의 규칙 학습 과정입니다. 부모가 권위를 가지고 가정의 규칙과 아이가 지켜야 할 한계를 명확히 설정하여 일관성 있게 지키게 하는 구조화 과정이 필요합니다. 일일이 가르치는 것을 넘어 가정의 틀 속에서 아이 스스로 바른 행동을 습관화하여 삶의 룰을 체득하게 하는 교육적 지향점을 가집니다. 부모의 확신과 신뢰를 바탕으로 아이가 부모의 말을 들어야 한다는 확신을 가지게 함과 동시에 부모의 교양 있는 배려를 조화시켜 훈육을 수월하게 만드는 환경을 구축해야 합니다. 또한 유엔아동권리협약에 기반하여 아동을 소유물이 아닌 독립된 인격체로 존중해야 합니다.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 2: Two Pillars -->
+            <section>
+                <h2 class="slide-title">훈육의 두 기둥: 따뜻함과 구조화</h2>
+                <div class="grid-2">
+                    <div class="flex-center">
+                        <!-- Canvas for Interactive Diagram -->
+                        <canvas id="pillarChart"></canvas>
+                    </div>
+                    <div class="glass-panel">
+                        <div class="scroll-box content-text">
+                            <strong>[따뜻함]</strong> 아이가 잘못을 했을 때에도 변함없이 사랑받고 있다는 확신을 주어 정서적 안정감 속에서 배움이 일어나게 합니다. 아이의 발달 단계와 감정에 공감하는 태도입니다.<br><br>
+                            <strong>[구조화]</strong> 아이가 무엇을 해야 하는지 명확한 가이드라인을 제공합니다. 스스로 문제를 해결할 도구를 주는 과정이며, 실수를 배움의 기회로 전환하는 긍정적 안내자의 역할을 수행합니다.<br><br>
+                            이 두 가지가 조화를 이룰 때 아이는 정서적 안정감 속에서 행동의 지침을 배우고 긍정 훈육이 완성됩니다.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 3: Timing -->
+            <section>
+                <h2 class="slide-title">훈육 시작 시기에 대한 전문가 견해</h2>
+                <div class="glass-panel">
+                    <table class="glass-table">
+                        <thead>
+                            <tr>
+                                <th>전문가</th>
+                                <th>권장 시기</th>
+                                <th>주요 논거</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="fragment">
+                                <td>하정훈 전문의</td>
+                                <td class="highlight">신생아기부터</td>
+                                <td>생활 습관과 가정의 틀 확립</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td>이민주 소아과</td>
+                                <td class="highlight">출생 직후</td>
+                                <td>사회 규범 학습의 시작</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td>오은영 박사</td>
+                                <td class="highlight">36개월 (본격화)</td>
+                                <td>언어 발달 및 인과관계 이해</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="scroll-box content-text" style="height: 150px;">
+                        두 돌 이전 훈육 무용론은 잘못된 상식입니다. '세 살 버릇 여든까지 간다'는 속담처럼 만 2세 이전에 가정 내 훈육의 틀이 잡혀야 합니다. 오은영 박사는 '말로 하는 훈육'의 적기를 36개월로 보았으나, 그 이전의 행동 제지와 틀 형성은 필수적입니다.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 4: 0-6 Months -->
+            <section>
+                <h2 class="slide-title">0~6개월: 신뢰 형성 및 감각 발달</h2>
+                <div class="grid-2">
+                    <div class="glass-panel">
+                        <ul class="content-text" style="list-style: none;">
+                            <li style="margin-bottom:15px;">💕 <strong>신뢰감:</strong> 즉각적인 반응과 스킨십</li>
+                            <li style="margin-bottom:15px;">🧠 <strong>뇌 발달:</strong> 오감 자극과 반응</li>
+                            <li style="margin-bottom:15px;">👄 <strong>구강기:</strong> 탐색과 근육 발달</li>
+                        </ul>
+                    </div>
+                    <div class="glass-panel">
+                        <h4 style="border-bottom:1px solid white;">발달 체크리스트 (클릭)</h4>
+                        <div class="content-text">
+                            <label style="display:block; margin:10px;"><input type="checkbox"> 사회성: 미소 짓기</label>
+                            <label style="display:block; margin:10px;"><input type="checkbox"> 언어: 옹알이 시작</label>
+                            <label style="display:block; margin:10px;"><input type="checkbox"> 신체: 목 가누기</label>
+                        </div>
+                        <div class="scroll-box content-text" style="height:100px;">
+                            이 시기 최고의 훈육은 위험 요소를 제거하여 안전한 탐색 환경을 만들어주는 것입니다.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: 6-12 Months -->
+            <section>
+                <h2 class="slide-title">6~12개월: 소통과 대상 영속성</h2>
+                <div class="glass-panel" style="display:flex; justify-content:space-around; align-items:center;">
+                    <div class="fragment fade-right" style="text-align:center;">
+                        <div style="font-size:3rem;">🙈</div>
+                        <div class="content-text">까꿍놀이<br>(대상영속성)</div>
+                    </div>
+                    <div style="font-size:2rem;">➡</div>
+                    <div class="fragment fade-right" style="text-align:center;">
+                        <div style="font-size:3rem;">🗣️</div>
+                        <div class="content-text">옹알이 반응<br>(언어 기초)</div>
+                    </div>
+                    <div style="font-size:2rem;">➡</div>
+                    <div class="fragment fade-right" style="text-align:center;">
+                        <div style="font-size:3rem;">🚶</div>
+                        <div class="content-text">이동 능력<br>(탐색 확장)</div>
+                    </div>
+                </div>
+                <div class="scroll-box content-text glass-panel">
+                    부모가 눈앞에서 사라져도 다시 돌아온다는 신뢰를 통해 분리 불안을 극복합니다. "안 돼"를 이해하기 시작하며, 엄지와 검지를 사용하는 소근육 발달이 이루어지는 시기입니다.
+                </div>
+            </section>
+
+            <!-- Slide 6: 12-24 Months -->
+            <section>
+                <h2 class="slide-title">12~24개월: 자아 형성과 탐색기</h2>
+                <div class="grid-2">
+                    <div class="chart-container">
+                        <canvas id="autonomyChart"></canvas>
+                    </div>
+                    <div class="glass-panel">
+                        <h4 class="highlight">재접근기의 양가감정</h4>
+                        <div class="scroll-box content-text">
+                            독립 보행이 시작되며 세상에 대한 과학적 탐구가 폭발하는 시기입니다. "싫어"라는 말로 자아를 표현하지만, 동시에 부모에게 매달리는 재접근기를 겪습니다. 아이의 감정은 읽어주되, 위험한 행동에는 단호한 한계 설정이 필요합니다. 언어 이해력과 표현력의 격차로 인한 좌절감을 공감해주는 것이 중요합니다.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 7: 24-36 Months -->
+            <section>
+                <h2 class="slide-title">24~36개월: 상상력과 사회화</h2>
+                <div class="glass-panel">
+                    <div class="grid-2">
+                        <ul class="content-text">
+                            <li>🧚 <strong>상상력:</strong> 가상놀이 시작, 두려움 발생</li>
+                            <li>🗣️ <strong>언어:</strong> 감정 라벨링, 복잡한 지시 이해</li>
+                            <li>🤝 <strong>사회성:</strong> 또래 놀이, 규칙 습득</li>
+                        </ul>
+                        <div class="chart-container">
+                            <canvas id="socialChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="scroll-box content-text" style="margin-top:20px;">
+                        현실과 상상을 구분하기 시작하며 인지적으로 확장됩니다. 친구와 어울리며 차례 지키기 등 사회적 룰을 익히고, "왜 하면 안 되는지"에 대한 논리적 설명이 통하는 시기이므로 긍정 훈육의 효과가 높습니다.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 8: Vaccines -->
+            <section>
+                <h2 class="slide-title">12개월 영유아 예방접종 가이드</h2>
+                <div class="grid-2">
+                    <div class="glass-panel timeline content-text">
+                        <div class="timeline-item">
+                            <strong>수두 & MMR (1차)</strong><br>
+                            <span style="font-size:0.8em; opacity:0.8;">4~6세 2차 접종</span>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>폐구균 & 뇌수막염 (4차)</strong><br>
+                            <span style="font-size:0.8em; opacity:0.8;">기초 접종 완료</span>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>일본뇌염</strong><br>
+                            <span style="font-size:0.8em; opacity:0.8;">사백신/생백신 선택</span>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>A형 간염</strong><br>
+                            <span style="font-size:0.8em; opacity:0.8;">6~12개월 후 2차</span>
+                        </div>
+                    </div>
+                    <div class="glass-panel">
+                        <div class="scroll-box content-text">
+                            돌이 되면 무료 6종, 유료 1종 등 많은 접종이 기다리고 있습니다. 제 날짜를 지키는 것이 좋지만, 아기 컨디션에 따라 조절 가능합니다. 일본뇌염은 백신 종류에 따라 일정이 다르니 확인이 필요합니다.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 9: Post-Vaccine Care -->
+            <section>
+                <h2 class="slide-title">접종 후 이상 반응 대처</h2>
+                <div style="display:flex; justify-content:space-between; gap:20px;">
+                    <div class="glass-panel fragment" style="flex:1; text-align:center;">
+                        <div style="font-size:2rem;">🏥</div>
+                        <h4>20분 대기</h4>
+                        <p class="content-text">아나필락시스 확인</p>
+                    </div>
+                    <div class="glass-panel fragment" style="flex:1; text-align:center;">
+                        <div style="font-size:2rem;">🚿</div>
+                        <h4>당일 목욕</h4>
+                        <p class="content-text">가볍게 가능 / 밴드 제거</p>
+                    </div>
+                    <div class="glass-panel fragment" style="flex:1; text-align:center;">
+                        <div style="font-size:2rem;">🌡️</div>
+                        <h4>발열 대처</h4>
+                        <p class="content-text">MMR은 7~12일 후 주의</p>
+                    </div>
+                </div>
+                <div class="glass-panel content-text">
+                    <p>접종 기록은 전산망 오류에 대비해 사진으로 남겨 평생 보관하는 것이 좋습니다. 미열 시 해열제를 준비하세요.</p>
+                </div>
+            </section>
+
+            <!-- Slide 10: Nutrition -->
+            <section>
+                <h2 class="slide-title">돌 이후 영양제 및 식단</h2>
+                <div class="grid-2">
+                    <div class="chart-container">
+                        <canvas id="nutritionPie"></canvas>
+                    </div>
+                    <div class="glass-panel">
+                        <ul class="content-text">
+                            <li>☀️ <strong>비타민 D:</strong> 필수 (하루 600IU)</li>
+                            <li>🦠 <strong>유산균:</strong> 면역 & 배변 도움</li>
+                            <li>⚠️ <strong>철분/아연:</strong> 결핍 확인 후 섭취</li>
+                        </ul>
+                        <div class="scroll-box content-text">
+                            영양제보다 균형 잡힌 식단(곡물, 채소, 과일, 단백질, 유제품)이 우선입니다. 이 시기의 입맛이 평생 건강을 좌우하므로 다양한 식재료를 경험하게 해주세요.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 11: Milk Transition -->
+            <section>
+                <h2 class="slide-title">분유에서 생우유로: 7일 루틴</h2>
+                <div class="glass-panel">
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
+                        <div class="content-text">분유 100%</div>
+                        <div class="content-text highlight">우유 100%</div>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.2); height:20px; border-radius:10px; overflow:hidden;">
+                        <div class="fragment fade-right" style="width:30%; height:100%; background:var(--accent-color); float:left;"></div>
+                        <div class="fragment fade-right" style="width:30%; height:100%; background:var(--accent-color); float:left;"></div>
+                        <div class="fragment fade-right" style="width:40%; height:100%; background:var(--accent-color); float:left;"></div>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-top:10px;" class="content-text">
+                        <span>1~2일차 (7:3)</span>
+                        <span>3~4일차 (5:5)</span>
+                        <span>7일차 (완료)</span>
+                    </div>
+                </div>
+                <div class="glass-panel content-text">
+                    멸균우유로 시작해 냉장우유로 넘어가며, 젖병 대신 빨대컵이나 컵 사용을 병행하여 독립심을 키웁니다.
+                </div>
+            </section>
+
+            <!-- Slide 12: Eating Habits -->
+            <section>
+                <h2 class="slide-title">올바른 식습관 형성 지침</h2>
+                <div class="grid-2">
+                    <div class="glass-panel content-text" style="background:rgba(0,255,0,0.1);">
+                        <h4>✅ DO</h4>
+                        <ul>
+                            <li>정해진 자리(하이체어) 착석</li>
+                            <li>식사 직전 착석하여 흥미 유발</li>
+                            <li>거부 시 식사 중단 (단호함)</li>
+                        </ul>
+                    </div>
+                    <div class="glass-panel content-text" style="background:rgba(255,0,0,0.1);">
+                        <h4>❌ DON'T</h4>
+                        <ul>
+                            <li>따라다니며 먹이기</li>
+                            <li>영상(미디어) 보여주기</li>
+                            <li>억지로 먹이기</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="glass-panel scroll-box content-text" style="margin-top:10px;">
+                    바른 식습관은 자기 조절의 첫걸음입니다. 따라다니며 먹이는 것은 주도성을 해치므로, 자리를 벗어나면 식사가 종료됨을 일관성 있게 알려주세요.
+                </div>
+            </section>
+
+            <!-- Slide 13: Temperament -->
+            <section>
+                <h2 class="slide-title">아동 기질의 7가지 이해</h2>
+                <div class="glass-panel">
+                    <div class="content-text">
+                        <label>활동성 <input type="range" min="0" max="100" value="80" style="width:100%;"></label>
+                        <label>규칙성 <input type="range" min="0" max="100" value="40" style="width:100%;"></label>
+                        <label>적응성 <input type="range" min="0" max="100" value="60" style="width:100%;"></label>
+                        <label>반응강도 <input type="range" min="0" max="100" value="90" style="width:100%;"></label>
+                    </div>
+                    <div class="scroll-box content-text">
+                        기질은 좋고 나쁨이 없습니다. 순한 아이, 까다로운 아이, 느린 아이 등 타고난 특성을 이해하고 존중해야 합니다. 부모는 아이의 기질을 바꾸려 하기보다 그 특성에 맞는 양육 환경을 제공해야 합니다.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 14: Goodness of Fit -->
+            <section>
+                <h2 class="slide-title">부모와 자녀의 기질 조화</h2>
+                <div class="grid-2">
+                    <div class="glass-panel flex-center">
+                        <div style="font-size:5rem;">🧩</div>
+                        <h4>Goodness of Fit</h4>
+                    </div>
+                    <div class="glass-panel">
+                        <ul class="content-text">
+                            <li>🧐 <strong>자기 성찰:</strong> 부모 자신의 기질 파악</li>
+                            <li>⚡ <strong>갈등 이해:</strong> 반항이 아닌 '차이'</li>
+                            <li>🛠️ <strong>환경 조정:</strong> 싸우지 않고 협의하기</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="glass-panel content-text">
+                    부모와 자녀의 기질이 다를 때 발생하는 갈등을 이해하고, 아이의 부족한 점을 환경적으로 보완해주는 것이 '조화 적합성'의 핵심입니다.
+                </div>
+            </section>
+
+            <!-- Slide 15: Tantrums -->
+            <section>
+                <h2 class="slide-title">분노발발(Tantrum) 대처 전략</h2>
+                <table class="glass-table content-text">
+                    <thead>
+                        <tr>
+                            <th>상황</th>
+                            <th>바람직한 반응</th>
+                            <th>피해야 할 반응</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>드러누울 때</td>
+                            <td class="highlight">안전하게 대기</td>
+                            <td>억지로 일으키기</td>
+                        </tr>
+                        <tr>
+                            <td>물건 던질 때</td>
+                            <td class="highlight">대체물(공) 유도</td>
+                            <td>화내며 뺏기</td>
+                        </tr>
+                        <tr>
+                            <td>공격성</td>
+                            <td class="highlight">단호한 "안 돼"</td>
+                            <td>장난으로 받기</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="scroll-box content-text" style="margin-top:20px;">
+                    16~24개월은 감정 조절이 미숙한 시기입니다. 떼를 쓸 때는 감정은 읽어주되 행동은 제한하는 '일관성'이 중요하며, 아이가 스스로 진정될 때까지 기다려주는 인내가 필요합니다.
+                </div>
+            </section>
+
+            <!-- Slide 16: Toys 0-12 -->
+            <section>
+                <h2 class="slide-title">맞춤 장난감 (0~12개월)</h2>
+                <div class="grid-2">
+                    <div class="glass-panel content-text">
+                        <ul>
+                            <li>👀 <strong>0-3개월:</strong> 흑백 모빌, 초점책</li>
+                            <li>🦷 <strong>3-6개월:</strong> 치발기, 헝ꊊ책</li>
+                            <li>💪 <strong>6-9개월:</strong> 터미타임 매트, 거울</li>
+                            <li>🧠 <strong>9-12개월:</strong> 링 쌓기, 까꿍 놀잇감</li>
+                        </ul>
+                    </div>
+                    <div class="glass-panel flex-center">
+                        <div style="font-size:4rem;">🧸</div>
+                        <p class="content-text">오감 자극 & 대상 영속성</p>
+                    </div>
+                </div>
+                <div class="glass-panel content-text">
+                    입으로 가져가는 시기이므로 안전하고 세탁 가능한 소재를 선택하며, 대근육과 소근육 발달을 골고루 자극하는 장난감을 제공합니다.
+                </div>
+            </section>
+
+            <!-- Slide 17: Toys 12-36 -->
+            <section>
+                <h2 class="slide-title">맞춤 장난감 (12~36개월)</h2>
+                <div class="glass-panel">
+                    <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; text-align:center;" class="content-text">
+                        <div class="glass-panel" style="margin:0; padding:15px;">
+                            <div style="font-size:2rem;">🍳</div>
+                            역할 놀이<br>(사회성)
+                        </div>
+                        <div class="glass-panel" style="margin:0; padding:15px;">
+                            <div style="font-size:2rem;">🧩</div>
+                            퍼즐/블록<br>(소근육)
+                        </div>
+                        <div class="glass-panel" style="margin:0; padding:15px;">
+                            <div style="font-size:2rem;">🚲</div>
+                            승용 완구<br>(신체 조절)
+                        </div>
+                    </div>
+                    <div class="scroll-box content-text" style="margin-top:20px;">
+                        모방 심리가 강해지는 시기입니다. 주방 놀이 등으로 언어와 사회성을 키우고, 그리기 도구로 창의적 표현을 돕습니다. 분류 능력을 키우는 도형 맞추기도 좋습니다.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 18: Safety -->
+            <section>
+                <h2 class="slide-title">가정 내 안전사고 예방</h2>
+                <div class="grid-2">
+                    <div class="glass-panel content-text" style="border: 2px solid #ff5252;">
+                        <h4 style="color:#ff5252;">⚠️ 주요 위험</h4>
+                        <ul>
+                            <li>추락 (침대, 소파)</li>
+                            <li>질식 (작은 장난감)</li>
+                            <li>화상 (밥솥, 정수기)</li>
+                            <li>감전 (콘센트)</li>
+                        </ul>
+                    </div>
+                    <div class="glass-panel content-text">
+                        <h4 class="highlight">🛡️ 예방 수칙</h4>
+                        <ul>
+                            <li>안전 덮개/가드 설치</li>
+                            <li>위험물 높은 곳 보관</li>
+                            <li>가구 모서리 보호대</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="glass-panel content-text">
+                    어린이 안전사고의 60% 이상이 가정에서 발생합니다. 아이의 눈높이에서 위험 요소를 상시 점검하고 제거하는 것이 부모의 의무입니다.
+                </div>
+            </section>
+
+            <!-- Slide 19: Support Services -->
+            <section>
+                <h2 class="slide-title">발달 지원 및 의료 서비스</h2>
+                <div class="glass-panel content-text">
+                    <ol>
+                        <li class="fragment"><strong>영유아 건강검진:</strong> 발달 이상 조기 선별 (총 8회)</li>
+                        <li class="fragment"><strong>발달 정밀 검사비 지원:</strong> 심화 평가 필요 시</li>
+                        <li class="fragment"><strong>육아종합지원센터:</strong> 양육 상담 및 놀이 치료</li>
+                        <li class="fragment"><strong>우리아이발달지원단:</strong> 다영역 전문가 협력</li>
+                    </ol>
+                </div>
+                <div class="glass-panel content-text">
+                    발달 지연이 의심되면 주저 말고 전문가(소아재활, 정신건강의학과)를 찾으세요. 조기 개입이 아이의 성장에 결정적입니다.
+                </div>
+            </section>
+
+            <!-- Slide 20: Conclusion -->
+            <section>
+                <div class="glass-panel text-center">
+                    <h2 class="slide-title">긍정 양육의 완성</h2>
+                    <div style="display:flex; flex-direction:column; align-items:center; gap:5px;" class="content-text">
+                        <div style="background:rgba(255,255,255,0.1); width:200px; padding:10px; border-radius:5px;">장기적 목표</div>
+                        <div style="background:rgba(255,255,255,0.2); width:300px; padding:10px; border-radius:5px;">아이의 관점 이해</div>
+                        <div style="background:rgba(255,255,255,0.3); width:400px; padding:10px; border-radius:5px;">따뜻함 + 구조화</div>
+                        <div style="background:var(--accent-color); width:500px; padding:10px; border-radius:5px; color:white;">부모와 아이의 동반 성장</div>
+                    </div>
+                    <div class="scroll-box content-text" style="margin-top:20px;">
+                        완벽한 부모가 되려 하지 말고, 실수에서 배우며 성장하는 모습을 보여주세요. 가장 힘든 훈육의 순간이 아이에게는 평생의 기술을 배우는 기회입니다. 아이의 존엄성을 존중하는 비폭력 양육을 실천합시다.
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script>
+        // Initialize Reveal.js
+        Reveal.initialize({
+            hash: true,
+            center: true,
+            transition: 'convex', // Glassmorphism fits well with convex or fade
+            backgroundTransition: 'slide'
+        });
+
+        // Toggle Theme Logic
+        function toggleTheme() {
+            document.body.classList.toggle('light-theme');
+            const theme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+            updateCharts(theme);
+        }
+
+        // Charts Configuration
+        const commonChartConfig = (type, data, options) => {
+            return {
+                type: type,
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: 'white' } } },
+                    scales: {
+                        x: { ticks: { color: 'white' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                        y: { ticks: { color: 'white' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+                    },
+                    ...options
+                }
+            };
+        };
+
+        // Render Charts when page loads
+        window.onload = function() {
+            // Slide 2: Pillar Chart
+            new Chart(document.getElementById('pillarChart'), commonChartConfig('bar', {
+                labels: ['따뜻함 (Warmth)', '구조화 (Structure)'],
+                datasets: [{
+                    label: '훈육 요소',
+                    data: [90, 90],
+                    backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)'],
+                    borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'],
+                    borderWidth: 1
+                }]
+            }, { scales: { y: { beginAtZero: true, max: 100 } } }));
+
+            // Slide 6: Autonomy Chart
+            new Chart(document.getElementById('autonomyChart'), commonChartConfig('line', {
+                labels: ['12개월', '18개월', '24개월', '30개월'],
+                datasets: [{
+                    label: '독립심',
+                    data: [20, 50, 80, 90],
+                    borderColor: '#4bc0c0',
+                    tension: 0.4
+                }, {
+                    label: '의존성(재접근기)',
+                    data: [80, 90, 40, 30],
+                    borderColor: '#ff9f40',
+                    tension: 0.4
+                }]
+            }));
+
+            // Slide 7: Social Chart
+            new Chart(document.getElementById('socialChart'), commonChartConfig('radar', {
+                labels: ['언어', '사회성', '신체', '인지', '자조'],
+                datasets: [{
+                    label: '24~36개월 발달',
+                    data: [80, 70, 90, 85, 60],
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                }]
+            }, { scales: { r: { ticks: { display: false }, grid: { color: 'rgba(255,255,255,0.2)' } } } }));
+
+            // Slide 10: Nutrition Pie
+            new Chart(document.getElementById('nutritionPie'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['통곡물', '채소/과일', '유제품', '단백질'],
+                    datasets: [{
+                        data: [30, 30, 25, 15],
+                        backgroundColor: ['#ffcd56', '#4bc0c0', '#36a2eb', '#ff6384'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    plugins: { legend: { position: 'right', labels: { color: 'white' } } }
+                }
+            });
+        };
+
+        // Chart Update for Theme
+        function updateCharts(theme) {
+            const color = theme === 'light' ? '#333' : '#fff';
+            Chart.instances.forEach(chart => {
+                if (chart.options.plugins.legend) chart.options.plugins.legend.labels.color = color;
+                if (chart.options.scales.x) chart.options.scales.x.ticks.color = color;
+                if (chart.options.scales.y) chart.options.scales.y.ticks.color = color;
+                if (chart.options.scales.r) chart.options.scales.r.grid.color = theme === 'light' ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.2)';
+                chart.update();
+            });
+        }
+    </script>
+</body>
+</html>
